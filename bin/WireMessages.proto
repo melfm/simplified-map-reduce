@@ -1,0 +1,26 @@
+package common;
+
+//This is a protocol buffer file, each block specifies a 
+// message types when compiled using protoc, this outputs
+// java code to handle these messages
+
+// https://developers.google.com/protocol-buffers/docs/javatutorial
+message BootstrapMessage {
+  required string address = 1;
+}
+
+message ResponseMessage {
+	required uint32 status = 1;
+}
+
+message ComputationMessage {
+	required uint32 id = 1;
+	required uint32 value1 = 2;
+	required uint32 value2 = 3;
+}
+
+message ResultMessage{
+	required uint32 id = 1;
+	required uint32 result = 2;
+	
+}
