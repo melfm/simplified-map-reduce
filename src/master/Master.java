@@ -27,7 +27,9 @@ public class Master {
 		
 		//you need to populate this arraylist 
 		String dataFile = args[0];
-		getInputFile(dataFile,workParts);
+		Integer operation =Integer.parseInt(args[1]);
+		
+		getInputFile(dataFile,workParts,operation);
 		// Testing values are in the table correctly
 		for(Map.Entry<Integer, Computation> entry : workParts.entrySet()){
 			System.out.println(entry.getKey() + " val: " + entry.getValue().getFirstVal() +" "+ entry.getValue().getSecondVal());	
@@ -45,10 +47,11 @@ public class Master {
 		//create the sink to receive results
 		Thread sink = new Thread(new Sink(context, workParts));
 		sink.start();	
+	
 	}
 	
 	
-	public static void getInputFile(String dataFile, HashMap<Integer, Computation> workParts) throws IOException{
+	public static void getInputFile(String dataFile, HashMap<Integer, Computation> workParts, Integer operation) throws IOException{
 		// Read the comma-separated set of integers and populate computation list
 		BufferedReader br = new BufferedReader(new FileReader(dataFile));
 		String line;
@@ -60,7 +63,7 @@ public class Master {
 				int numbFirst = Integer.parseInt(fields[i]);
 				i++;
 				int numbSecond = Integer.parseInt(fields[i]);
-				Computation comp = new Computation(numbFirst, numbSecond, jobID, 2);
+				Computation comp = new Computation(numbFirst, numbSecond, jobID, 2, operation);
 				workParts.put(jobID, comp);
 				jobID++;
 			}

@@ -68,6 +68,7 @@ public class Ventilator implements Runnable{
 		message.setValue1(job.getFirstVal());
 		message.setValue2(job.getSecondVal());
 		message.setId(job.getJobID());
+		message.setOperation(job.getOperation());
 		//currently this message type has no properties
 		//so we just build it and send an empty message
 		sender.send(message.build().toByteArray());

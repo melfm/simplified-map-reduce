@@ -931,6 +931,16 @@ public final class WireMessages {
      * <code>required uint32 value2 = 3;</code>
      */
     int getValue2();
+
+    // required uint32 operation = 4;
+    /**
+     * <code>required uint32 operation = 4;</code>
+     */
+    boolean hasOperation();
+    /**
+     * <code>required uint32 operation = 4;</code>
+     */
+    int getOperation();
   }
   /**
    * Protobuf type {@code common.ComputationMessage}
@@ -996,6 +1006,11 @@ public final class WireMessages {
             case 24: {
               bitField0_ |= 0x00000004;
               value2_ = input.readUInt32();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              operation_ = input.readUInt32();
               break;
             }
           }
@@ -1086,10 +1101,27 @@ public final class WireMessages {
       return value2_;
     }
 
+    // required uint32 operation = 4;
+    public static final int OPERATION_FIELD_NUMBER = 4;
+    private int operation_;
+    /**
+     * <code>required uint32 operation = 4;</code>
+     */
+    public boolean hasOperation() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>required uint32 operation = 4;</code>
+     */
+    public int getOperation() {
+      return operation_;
+    }
+
     private void initFields() {
       id_ = 0;
       value1_ = 0;
       value2_ = 0;
+      operation_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1108,6 +1140,10 @@ public final class WireMessages {
         memoizedIsInitialized = 0;
         return false;
       }
+      if (!hasOperation()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -1123,6 +1159,9 @@ public final class WireMessages {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeUInt32(3, value2_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeUInt32(4, operation_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -1144,6 +1183,10 @@ public final class WireMessages {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(3, value2_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, operation_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1267,6 +1310,8 @@ public final class WireMessages {
         bitField0_ = (bitField0_ & ~0x00000002);
         value2_ = 0;
         bitField0_ = (bitField0_ & ~0x00000004);
+        operation_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1307,6 +1352,10 @@ public final class WireMessages {
           to_bitField0_ |= 0x00000004;
         }
         result.value2_ = value2_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.operation_ = operation_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1332,6 +1381,9 @@ public final class WireMessages {
         if (other.hasValue2()) {
           setValue2(other.getValue2());
         }
+        if (other.hasOperation()) {
+          setOperation(other.getOperation());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
@@ -1346,6 +1398,10 @@ public final class WireMessages {
           return false;
         }
         if (!hasValue2()) {
+          
+          return false;
+        }
+        if (!hasOperation()) {
           
           return false;
         }
@@ -1466,6 +1522,39 @@ public final class WireMessages {
       public Builder clearValue2() {
         bitField0_ = (bitField0_ & ~0x00000004);
         value2_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // required uint32 operation = 4;
+      private int operation_ ;
+      /**
+       * <code>required uint32 operation = 4;</code>
+       */
+      public boolean hasOperation() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>required uint32 operation = 4;</code>
+       */
+      public int getOperation() {
+        return operation_;
+      }
+      /**
+       * <code>required uint32 operation = 4;</code>
+       */
+      public Builder setOperation(int value) {
+        bitField0_ |= 0x00000008;
+        operation_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required uint32 operation = 4;</code>
+       */
+      public Builder clearOperation() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        operation_ = 0;
         onChanged();
         return this;
       }
@@ -2005,10 +2094,10 @@ public final class WireMessages {
     java.lang.String[] descriptorData = {
       "\n\022WireMessages.proto\022\006common\"#\n\020Bootstra" +
       "pMessage\022\017\n\007address\030\001 \002(\t\"!\n\017ResponseMes" +
-      "sage\022\016\n\006status\030\001 \002(\r\"@\n\022ComputationMessa" +
+      "sage\022\016\n\006status\030\001 \002(\r\"S\n\022ComputationMessa" +
       "ge\022\n\n\002id\030\001 \002(\r\022\016\n\006value1\030\002 \002(\r\022\016\n\006value2" +
-      "\030\003 \002(\r\"+\n\rResultMessage\022\n\n\002id\030\001 \002(\r\022\016\n\006r" +
-      "esult\030\002 \002(\r"
+      "\030\003 \002(\r\022\021\n\toperation\030\004 \002(\r\"+\n\rResultMessa" +
+      "ge\022\n\n\002id\030\001 \002(\r\022\016\n\006result\030\002 \002(\r"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -2032,7 +2121,7 @@ public final class WireMessages {
           internal_static_common_ComputationMessage_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_common_ComputationMessage_descriptor,
-              new java.lang.String[] { "Id", "Value1", "Value2", });
+              new java.lang.String[] { "Id", "Value1", "Value2", "Operation", });
           internal_static_common_ResultMessage_descriptor =
             getDescriptor().getMessageTypes().get(3);
           internal_static_common_ResultMessage_fieldAccessorTable = new

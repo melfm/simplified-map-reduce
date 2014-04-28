@@ -13,14 +13,16 @@ public class Computation {
 	private Integer secondVal;
 	private Integer jobID;
 	private Integer duplicates_submited;
+	private Integer operation;
 	private ArrayList<Integer> resultList = new ArrayList<Integer>();
 	private boolean submitted;
 
 	// Constructor
-	public Computation(Integer firstVal, Integer secondVal, Integer jobID,Integer duplicates_submited) {
+	public Computation(Integer firstVal, Integer secondVal, Integer jobID,Integer duplicates_submited, Integer operation) {
 		this.firstVal = firstVal;
 		this.secondVal = secondVal;
 		this.jobID = jobID;
+		this.operation = operation;
 		this.duplicates_submited = duplicates_submited;
 		this.submitted = false;
 	}
@@ -35,6 +37,10 @@ public class Computation {
 	
 	public Integer getJobID() {
 		return this.jobID;
+	}
+	
+	public Integer getOperation() {
+		return this.operation;
 	}
 	
 	public ArrayList<Integer> getResultList(){
@@ -52,4 +58,5 @@ public class Computation {
 	public void setSubmitted(boolean submitted) {
 		this.submitted = submitted;
 	}
+	
 }

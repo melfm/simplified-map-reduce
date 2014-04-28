@@ -33,7 +33,17 @@ public class WorkReceiver implements Runnable{
 			int id = work.getId();
 			//once you have decoded the message you probably want to call
 			//a method from a another class to perform the computation
-			int result = peformProduct(firstVal, secondVal);
+			int operation = work.getOperation();
+			System.out.println("Operation id " + operation);
+			int result = 0;
+			switch(operation) {
+				case 1 : result = peformProduct(firstVal, secondVal,result); break;
+				case 2 : result = performSubtraction(firstVal, secondVal,result); break;
+				case 3 : result = performSum(firstVal, secondVal,result); break;
+				default : break;
+			}
+			//result = peformProduct(firstVal, secondVal,result);
+			System.out.println("Result " + result);
 			ResultSender sender = new ResultSender(context, master);
 			sender.sendToSink(id,result);
 			}
@@ -43,17 +53,17 @@ public class WorkReceiver implements Runnable{
 		}
 	}
 	
-	public int peformProduct(int val1, int val2) {
-		int result = val1 * val2;
-		return result;
+	public int peformProduct(int val1, int val2, int result) {
+		result = 1;
+		return result = val1 * val2;
 	}
 	
-	public int performSubtraction(int val1, int val2) {
-		return (val1 - val2);
+	public int performSubtraction(int val1, int val2,int result) {
+		return result = (val2 - val1);
 	}
 	
-	public int performSum(int val1, int val2) {
-		return (val1+ val2);
+	public int performSum(int val1, int val2, int result) {
+		return result = (val1+ val2);
 	}
 
 }

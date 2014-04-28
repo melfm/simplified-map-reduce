@@ -1,5 +1,6 @@
 package master;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -8,13 +9,13 @@ import org.zeromq.ZMQ.Context;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import common.WireMessages.ComputationMessage;
 import common.WireMessages.ResultMessage;
 
 public class Sink implements Runnable{
 	private Context context;
-	//private ArrayList<Integer> results;
-	private int finalProduct = 1;
+	private ArrayList<Integer> results = new ArrayList<Integer>();
+	
+	private int finalResult;
 	private HashMap<Integer, Computation> workParts;
 	
 	public Sink(Context context, HashMap<Integer, Computation> workParts){
@@ -51,15 +52,23 @@ public class Sink implements Runnable{
 								comp.getResultList().clear();
 								comp.setSubmitted(false);
 							} else {
-								// Job done remove from the list
-								finalProduct *= result;
-								System.out.println("Final Res " + finalProduct);
+								// Job done,store result and remove from the list
+								//finalResult = calculateFinalResult(result, comp.getOperation(),finalResult);
+								System.out.println("Result " + result);
+								results.add(result);
 								workParts.remove(jobID);
+								if(workParts.isEmpty()){
+									finalResult = calculateFinalResult(results, finalResult,comp.getOperation());
+									System.out.println("Give final result here");
+									System.out.println(finalResult);
+									
+								}
 							}
 						}
 					}
 				}
 			}
+			
 		} catch (InvalidProtocolBufferException e) {
 			System.err.println("Unable to decode result message");
 			e.printStackTrace();
@@ -67,17 +76,40 @@ public class Sink implements Runnable{
 		
 	}
 	
-	public void resubmitJob(ZMQ.Socket receiver,Context context, Computation job, int jobID){
-		// Don't wait for workers since resubmitting,
-		// assume there are some workers out there
-		ComputationMessage.Builder message = ComputationMessage.newBuilder();
-		message.setValue1(job.getFirstVal());
-		message.setValue2(job.getSecondVal());
-		message.setId(jobID);
-		//currently this message type has no properties
-		//so we just build it and send an empty message
-		receiver.send(message.build().toByteArray());
+	public int calculateFinalResult(ArrayList<Integer> results, int result, int operation){
+		switch(operation) {
+			case 1 : result = peformProduct(results, result); break;
+			case 2 : result = performSubtraction(results, result); break;
+			case 3 : result = performSum(results, result); break;
+			default : break;
+		}
+		return result;
 		
+	}
+	
+	public int peformProduct(ArrayList<Integer> resultList, int result) {
+		// Initialize to zero since performing product
+		result = 1;
+		for(int i=0; i <resultList.size(); i++){
+			result *= resultList.get(i);
+		}
+		return result;
+	}
+	
+	public int performSubtraction(ArrayList<Integer> resultList, int result) {
+		result = 0;
+		for(int i=0; i <resultList.size(); i++){
+			result -= resultList.get(i);
+		}
+		return result;
+	}
+	
+	public int performSum(ArrayList<Integer> resultList, int result) {
+		result = 0;
+		for(int i=0; i <resultList.size(); i++){
+			result += resultList.get(i);
+		}
+		return result;
 	}
 	
 

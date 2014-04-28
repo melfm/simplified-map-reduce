@@ -17,6 +17,7 @@ message ComputationMessage {
 	required uint32 id = 1;
 	required uint32 value1 = 2;
 	required uint32 value2 = 3;
+	required uint32 operation = 4;
 }
 
 message ResultMessage{
